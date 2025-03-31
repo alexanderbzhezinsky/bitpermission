@@ -1,10 +1,10 @@
-package org.alexbzhe.bitpermission.jackson;
+package io.github.alexanderbzhezinsky.bitpermission.jackson;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
-import org.alexbzhe.bitpermission.BitPermission;
-import org.alexbzhe.bitpermission.enumeration.SmallTestPermissions;
+import io.github.alexanderbzhezinsky.bitpermission.BitPermission;
+import io.github.alexanderbzhezinsky.bitpermission.enumeration.SmallTestPermissions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -33,7 +33,7 @@ class BitPermissionDeSerializationTest {
             "{\"SmallTestPermissions@128\":\"4000000000000g000040000201\"}";
 
     @Test
-    void shouldReturnBitPermissionJacksonModule() throws JsonProcessingException {
+    void shouldReturnBitPermissionJacksonModule() {
 
         // when
         final var module = BitPermissionJackson.getModule();

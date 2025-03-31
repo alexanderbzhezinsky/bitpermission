@@ -1,14 +1,14 @@
-package org.alexbzhe.bitpermission.jackson;
+package io.github.alexanderbzhezinsky.bitpermission.jackson;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.ser.std.StdSerializer;
-import org.alexbzhe.bitpermission.BitPermission;
+import io.github.alexanderbzhezinsky.bitpermission.BitPermission;
 
 import java.io.IOException;
 import java.util.Objects;
 
-import static org.alexbzhe.bitpermission.jackson.BitPermissionJackson.DOMAIN_AND_REVISION_DIVIDER;
+import static io.github.alexanderbzhezinsky.bitpermission.jackson.BitPermissionJackson.DOMAIN_AND_REVISION_DIVIDER;
 
 public class BitPermissionSerializer extends StdSerializer<BitPermission> {
 

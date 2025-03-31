@@ -1,4 +1,4 @@
-package org.alexbzhe.bitpermission.enumeration;
+package io.github.alexanderbzhezinsky.bitpermission.enumeration;
 
 import java.util.UUID;
 

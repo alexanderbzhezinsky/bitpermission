@@ -1,8 +1,8 @@
-package org.alexbzhe.bitpermission.jackson;
+package io.github.alexanderbzhezinsky.bitpermission.jackson;
 
 import com.fasterxml.jackson.core.Version;
 import com.fasterxml.jackson.databind.module.SimpleModule;
-import org.alexbzhe.bitpermission.BitPermission;
+import io.github.alexanderbzhezinsky.bitpermission.BitPermission;
 
 public final class BitPermissionJackson {
 

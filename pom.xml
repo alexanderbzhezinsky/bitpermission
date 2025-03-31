@@ -4,11 +4,23 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>org.alexbzhe</groupId>
+    <groupId>io.github.alexanderbzhezinsky</groupId>
     <artifactId>bitpermission</artifactId>
     <version>0.0.1</version>
-
+    <name>bitpermission</name>
     <packaging>jar</packaging>
+
+    <description>Library to compress enum-mapped permissions</description>
+    <url>https://alexanderbzhezinsky.github.io/bitpermission/</url>
+    <inceptionYear>2025</inceptionYear>
+
+    <licenses>
+        <license>
+            <name>MIT License</name>
+            <url>https://github.com/alexanderbzhezinsky/bitpermission/blob/main/LICENSE/</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>

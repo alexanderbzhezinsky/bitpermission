@@ -1,4 +1,4 @@
-package org.alexbzhe.bitpermission;
+package io.github.alexanderbzhezinsky.bitpermission;
 
 import java.math.BigInteger;
 import java.util.Arrays;

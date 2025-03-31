@@ -1,9 +1,9 @@
-package org.alexbzhe.bitpermission;
+package io.github.alexanderbzhezinsky.bitpermission;
 
-import org.alexbzhe.bitpermission.enumeration.BigTestPermissions;
-import org.alexbzhe.bitpermission.enumeration.EmptyTestPermissions;
-import org.alexbzhe.bitpermission.enumeration.SmallTestPermissions;
-import org.alexbzhe.bitpermission.enumeration.TestPermissions;
+import io.github.alexanderbzhezinsky.bitpermission.enumeration.duplicate.TestPermissions;
+import io.github.alexanderbzhezinsky.bitpermission.enumeration.BigTestPermissions;
+import io.github.alexanderbzhezinsky.bitpermission.enumeration.EmptyTestPermissions;
+import io.github.alexanderbzhezinsky.bitpermission.enumeration.SmallTestPermissions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Stream;
 
-import static org.alexbzhe.bitpermission.BitPermissionService.createDomainClassPermissionMap;
+import static io.github.alexanderbzhezinsky.bitpermission.BitPermissionService.createDomainClassPermissionMap;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
 
@@ -31,8 +31,8 @@ class BitPermissionServiceTest {
                     + "00000000000000080001";
     private static final String TEST_BITMASK = "p";
     private static final List<? extends Enum<?>> INPUT_PERMISSIONS = List.of(
-            TestPermissions.CREATE_PERMISSION,
-            TestPermissions.DELETE_PERMISSION,
+            io.github.alexanderbzhezinsky.bitpermission.enumeration.TestPermissions.CREATE_PERMISSION,
+            io.github.alexanderbzhezinsky.bitpermission.enumeration.TestPermissions.DELETE_PERMISSION,
             BigTestPermissions.PERMISSION_0,
             BigTestPermissions.PERMISSION_23,
             BigTestPermissions.PERMISSION_123,
@@ -40,7 +40,7 @@ class BitPermissionServiceTest {
             BigTestPermissions.PERMISSION_1023,
             BigTestPermissions.PERMISSION_2325,
             BigTestPermissions.PERMISSION_2499,
-            TestPermissions.PERMISSION_1023);
+            io.github.alexanderbzhezinsky.bitpermission.enumeration.TestPermissions.PERMISSION_1023);
 
     private static final Set<Class<? extends Enum<?>>> ENUM_CLASSES_SET_WITH_NULL = new HashSet<>(2);
 
@@ -50,15 +50,15 @@ class BitPermissionServiceTest {
     }
 
     private static final BitPermissionService BIT_PERMISSION_SERVICE =
-            new BitPermissionService(Set.of(TestPermissions.class, BigTestPermissions.class));
+            new BitPermissionService(Set.of(io.github.alexanderbzhezinsky.bitpermission.enumeration.TestPermissions.class, BigTestPermissions.class));
 
     private static final BitPermission BIG_TEST_BIT_PERMISSION = new BitPermission(
             BigTestPermissions.class.getSimpleName(),
             BigTestPermissions.class.getEnumConstants().length,
             BIG_TEST_BITMASK
     );
-    private static final String TEST_DOMAIN = TestPermissions.class.getSimpleName();
-    private static final Integer TEST_REVISION = TestPermissions.class.getEnumConstants().length;
+    private static final String TEST_DOMAIN = io.github.alexanderbzhezinsky.bitpermission.enumeration.TestPermissions.class.getSimpleName();
+    private static final Integer TEST_REVISION = io.github.alexanderbzhezinsky.bitpermission.enumeration.TestPermissions.class.getEnumConstants().length;
     private static final BitPermission TEST_BIT_PERMISSION = new BitPermission(
             TEST_DOMAIN,
             TEST_REVISION,
@@ -87,12 +87,12 @@ class BitPermissionServiceTest {
                         IllegalArgumentException.class),
                 Arguments.of(
                         "empty enum class in the set",
-                        Set.of(TestPermissions.class, EmptyTestPermissions.class),
+                        Set.of(io.github.alexanderbzhezinsky.bitpermission.enumeration.TestPermissions.class, EmptyTestPermissions.class),
                         IllegalArgumentException.class),
                 Arguments.of(
                         "set contains enums with the same simple name",
-                        Set.of(TestPermissions.class,
-                                org.alexbzhe.bitpermission.enumeration.duplicate.TestPermissions.class),
+                        Set.of(io.github.alexanderbzhezinsky.bitpermission.enumeration.TestPermissions.class,
+                                TestPermissions.class),
                         IllegalArgumentException.class),
                 Arguments.of(
                         "set contains null",
@@ -104,18 +104,18 @@ class BitPermissionServiceTest {
     @Test
     void shouldCreateDomainClassPermissionMap() {
         // given
-        final Set<Class<? extends Enum<?>>> enumClassesSet = Set.of(TestPermissions.class, BigTestPermissions.class);
+        final Set<Class<? extends Enum<?>>> enumClassesSet = Set.of(io.github.alexanderbzhezinsky.bitpermission.enumeration.TestPermissions.class, BigTestPermissions.class);
 
         // when
         final var domainClassPermissionMap = createDomainClassPermissionMap(enumClassesSet);
 
         // then
-        final var testEnumClassPermissions = domainClassPermissionMap.get(TestPermissions.class.getSimpleName());
+        final var testEnumClassPermissions = domainClassPermissionMap.get(io.github.alexanderbzhezinsky.bitpermission.enumeration.TestPermissions.class.getSimpleName());
         final var bigTestEnumClassPermissions = domainClassPermissionMap.get(BigTestPermissions.class.getSimpleName());
-        assertThat(testEnumClassPermissions.enumClass()).isEqualTo(TestPermissions.class);
+        assertThat(testEnumClassPermissions.enumClass()).isEqualTo(io.github.alexanderbzhezinsky.bitpermission.enumeration.TestPermissions.class);
         assertThat(bigTestEnumClassPermissions.enumClass()).isEqualTo(BigTestPermissions.class);
         assertThat(testEnumClassPermissions.permissionList())
-                .isEqualTo(Collections.unmodifiableList(Arrays.asList(TestPermissions.class.getEnumConstants())));
+                .isEqualTo(Collections.unmodifiableList(Arrays.asList(io.github.alexanderbzhezinsky.bitpermission.enumeration.TestPermissions.class.getEnumConstants())));
         assertThat(bigTestEnumClassPermissions.permissionList())
                 .isEqualTo(Collections.unmodifiableList(Arrays.asList(BigTestPermissions.class.getEnumConstants())));
     }
@@ -135,7 +135,7 @@ class BitPermissionServiceTest {
                 .findFirst().get();
 
         assertThat(bigTestBitPermission.revision()).isEqualTo(BigTestPermissions.values().length);
-        assertThat(testBitPermission.revision()).isEqualTo(TestPermissions.values().length);
+        assertThat(testBitPermission.revision()).isEqualTo(io.github.alexanderbzhezinsky.bitpermission.enumeration.TestPermissions.values().length);
         assertThat(bigTestBitPermission.bitmask()).isEqualTo(BIG_TEST_BITMASK);
         assertThat(testBitPermission.bitmask()).isEqualTo(TEST_BITMASK);
     }
@@ -161,17 +161,17 @@ class BitPermissionServiceTest {
                 .filter(permission -> permission instanceof BigTestPermissions)
                 .map(BigTestPermissions.class::cast)
                 .toList();
-        final List<TestPermissions> outputTestPermissions = outputPermissions.stream()
-                .filter(permission -> permission instanceof TestPermissions)
-                .map(TestPermissions.class::cast)
+        final List<io.github.alexanderbzhezinsky.bitpermission.enumeration.TestPermissions> outputTestPermissions = outputPermissions.stream()
+                .filter(permission -> permission instanceof io.github.alexanderbzhezinsky.bitpermission.enumeration.TestPermissions)
+                .map(io.github.alexanderbzhezinsky.bitpermission.enumeration.TestPermissions.class::cast)
                 .toList();
         final List<BigTestPermissions> inputBigTestPermissions = INPUT_PERMISSIONS.stream()
                 .filter(permission -> permission instanceof BigTestPermissions)
                 .map(BigTestPermissions.class::cast)
                 .toList();
-        final List<TestPermissions> inputTestPermissions = INPUT_PERMISSIONS.stream()
-                .filter(permission -> permission instanceof TestPermissions)
-                .map(TestPermissions.class::cast)
+        final List<io.github.alexanderbzhezinsky.bitpermission.enumeration.TestPermissions> inputTestPermissions = INPUT_PERMISSIONS.stream()
+                .filter(permission -> permission instanceof io.github.alexanderbzhezinsky.bitpermission.enumeration.TestPermissions)
+                .map(io.github.alexanderbzhezinsky.bitpermission.enumeration.TestPermissions.class::cast)
                 .toList();
 
         assertThat(outputBigTestPermissions).containsExactlyInAnyOrderElementsOf(inputBigTestPermissions);
@@ -194,23 +194,23 @@ class BitPermissionServiceTest {
         return Stream.of(
                 Arguments.of(
                         true,
-                        List.of(TestPermissions.CREATE_PERMISSION, BigTestPermissions.PERMISSION_2499),
+                        List.of(io.github.alexanderbzhezinsky.bitpermission.enumeration.TestPermissions.CREATE_PERMISSION, BigTestPermissions.PERMISSION_2499),
                         "exists"),
                 Arguments.of(
                         false,
-                        List.of(TestPermissions.READ_PERMISSION, BigTestPermissions.PERMISSION_2499),
+                        List.of(io.github.alexanderbzhezinsky.bitpermission.enumeration.TestPermissions.READ_PERMISSION, BigTestPermissions.PERMISSION_2499),
                         "not exists"),
                 Arguments.of(
                         false,
-                        List.of(TestPermissions.CREATE_PERMISSION, BigTestPermissions.PERMISSION_2498),
+                        List.of(io.github.alexanderbzhezinsky.bitpermission.enumeration.TestPermissions.CREATE_PERMISSION, BigTestPermissions.PERMISSION_2498),
                         "not exists"),
                 Arguments.of(
                         false,
-                        List.of(TestPermissions.READ_PERMISSION, BigTestPermissions.PERMISSION_999),
+                        List.of(io.github.alexanderbzhezinsky.bitpermission.enumeration.TestPermissions.READ_PERMISSION, BigTestPermissions.PERMISSION_999),
                         "not exists"),
                 Arguments.of(
                         true,
-                        List.of(TestPermissions.DELETE_PERMISSION, BigTestPermissions.PERMISSION_0),
+                        List.of(io.github.alexanderbzhezinsky.bitpermission.enumeration.TestPermissions.DELETE_PERMISSION, BigTestPermissions.PERMISSION_0),
                         "exists"),
                 Arguments.of(
                         false,
@@ -218,8 +218,8 @@ class BitPermissionServiceTest {
                         "not exists (another class)"),
                 Arguments.of(
                         false,
-                        List.of(org.alexbzhe.bitpermission.enumeration.duplicate.TestPermissions.CREATE_PERMISSION,
-                                TestPermissions.CREATE_PERMISSION),
+                        List.of(TestPermissions.CREATE_PERMISSION,
+                                io.github.alexanderbzhezinsky.bitpermission.enumeration.TestPermissions.CREATE_PERMISSION),
                         "not exists (duplicate class)")
         );
     }
@@ -241,11 +241,11 @@ class BitPermissionServiceTest {
         return Stream.of(
                 Arguments.of(
                         true,
-                        TestPermissions.CREATE_PERMISSION,
+                        io.github.alexanderbzhezinsky.bitpermission.enumeration.TestPermissions.CREATE_PERMISSION,
                         "exists"),
                 Arguments.of(
                         false,
-                        TestPermissions.READ_PERMISSION,
+                        io.github.alexanderbzhezinsky.bitpermission.enumeration.TestPermissions.READ_PERMISSION,
                         "not exists"),
                 Arguments.of(
                         false,
@@ -265,7 +265,7 @@ class BitPermissionServiceTest {
                         "not exists (another class)"),
                 Arguments.of(
                         false,
-                        org.alexbzhe.bitpermission.enumeration.duplicate.TestPermissions.CREATE_PERMISSION,
+                        TestPermissions.CREATE_PERMISSION,
                         "not exists (duplicate class)")
         );
     }

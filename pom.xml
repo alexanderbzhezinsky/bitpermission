@@ -4,6 +4,13 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
+<!--    - license check-->
+<!--    - checkstyle-->
+<!--    - maven plugin-->
+<!--    - jacoco-->
+<!--    - build workflow-->
+<!--    - javadocs-->
+
     <groupId>io.github.alexanderbzhezinsky</groupId>
     <artifactId>bitpermission</artifactId>
     <version>0.0.1</version>
@@ -27,7 +34,7 @@
         <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-        <jakson.version>2.18.3</jakson.version>
+        <jackson.version>2.18.3</jackson.version>
         <junit-jupiter.version>5.12.1</junit-jupiter.version>
         <assertj-core.version>3.27.3</assertj-core.version>
     </properties>
@@ -39,13 +46,13 @@
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-core</artifactId>
-            <version>${jakson.version}</version>
+            <version>${jackson.version}</version>
         </dependency>
 
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
-            <version>${jakson.version}</version>
+            <version>${jackson.version}</version>
         </dependency>
 
 <!--    tests    -->

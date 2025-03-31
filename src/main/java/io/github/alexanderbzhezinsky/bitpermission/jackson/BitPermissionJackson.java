@@ -19,7 +19,7 @@ public final class BitPermissionJackson {
                         0,
                         1,
                         null,
-                        "org.alexbzhe",
+                        "io.github.alexanderbzhezinsky",
                         "bitpermission"))
                 .addSerializer(BitPermission.class, new BitPermissionSerializer())
                 .addDeserializer(BitPermission.class, new BitPermissionDeserializer());

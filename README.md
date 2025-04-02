@@ -14,7 +14,7 @@ final var permissionBitmask = new BigInteger("2").pow(enumEntry.ordinal());
 # Technologies
 
 * Java 17 
-* Jackson
+* Jackson (optional)
 * Maven
 
 # Java enum limitations & solutions
@@ -24,8 +24,6 @@ final var permissionBitmask = new BigInteger("2").pow(enumEntry.ordinal());
 3. It looks like the amount of allowed entries depends on enum definition itself: the larger enum entry definition provided, the less enum entries available.
 4. That's why this library forces to use so-called "domains" for permissions. Enum class simple name is taken for the "domain" of its permissions in this library.
 5. Also, domains allow to introduce new permissions, having them both with old permissions in parallel, then switch from old to new and eventually to remove the old ones.
-6. Please, find usage examples in tests. Btw, here in tests enum with 2.5k entries works ok.
-7. So it looks like, with this library, the potential upper limit for enum permissions (to be put into auth JWT, which not to exceed 10kb) is closer to 40k, which "should be enough for anyone" ))).
 
 # Notes about working with Java enums for permission purposes
 

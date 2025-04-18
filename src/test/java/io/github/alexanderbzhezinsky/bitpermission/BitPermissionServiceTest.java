@@ -161,7 +161,7 @@ class BitPermissionServiceTest {
     }
 
     @Test
-    void shouldReturnEmptyBitPermissionsWhenOnEmptyPermissions() {
+    void shouldReturnEmptyBitPermissionsWhenEmptyPermissionsProvided() {
 
         // when
         final var bitPermissions = BIT_PERMISSION_SERVICE.getBitPermissions(List.of());
@@ -177,30 +177,16 @@ class BitPermissionServiceTest {
         final List<? extends Enum<?>> outputPermissions = BIT_PERMISSION_SERVICE.getPermissions(BIT_PERMISSIONS);
 
         // then
-        final List<BigTestPermissions> outputBigTestPermissions = outputPermissions.stream()
-                .filter(permission -> permission instanceof BigTestPermissions)
-                .map(BigTestPermissions.class::cast)
-                .toList();
-        final List<TestPermissions> outputTestPermissions = outputPermissions.stream()
-                .filter(permission -> permission instanceof TestPermissions)
-                .map(TestPermissions.class::cast)
-                .toList();
-        final List<BigTestPermissions> inputBigTestPermissions = INPUT_PERMISSIONS.stream()
-                .filter(permission -> permission instanceof BigTestPermissions)
-                .map(BigTestPermissions.class::cast)
-                .toList();
-        final List<TestPermissions> inputTestPermissions = INPUT_PERMISSIONS.stream()
-                .filter(permission -> permission instanceof TestPermissions)
-                .map(TestPermissions.class::cast)
-                .toList();
-
-        assertThat(outputBigTestPermissions).containsExactlyInAnyOrderElementsOf(inputBigTestPermissions);
-        assertThat(outputTestPermissions).containsExactlyInAnyOrderElementsOf(inputTestPermissions);
+        assertThat(outputPermissions.size()).isEqualTo(INPUT_PERMISSIONS.size());
+        INPUT_PERMISSIONS.forEach(
+                inputPermission -> assertThat(outputPermissions.contains(inputPermission)).isTrue());
+        outputPermissions.forEach(
+                outputPermission -> assertThat(INPUT_PERMISSIONS.contains(outputPermission)).isTrue());
     }
 
     @ParameterizedTest(name = "should return {0} when checked permissions {1} {2} in BIT_PERMISSIONS")
     @MethodSource("getCheckHasPermissionsTestCases")
-    void checkHasPermissions(boolean expected, List<? extends Enum<?>> permissions, String legend) {
+    void shouldCheckHasPermissions(boolean expected, List<? extends Enum<?>> permissions, String legend) {
 
         // when
         final var actual =
@@ -243,7 +229,6 @@ class BitPermissionServiceTest {
                         "not exists (duplicate class)")
         );
     }
-
 
     @ParameterizedTest(name = "should return {0} when checked permission {1} {2} in BIT_PERMISSIONS")
     @MethodSource("getCheckHasPermissionTestCases")

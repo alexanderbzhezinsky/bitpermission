@@ -41,6 +41,7 @@ class BitPermissionDeSerializationTest {
         // then
         assertThat(module).isNotNull();
         assertThat(module).isInstanceOf(SimpleModule.class);
+        assertThat(module.getModuleName()).isEqualTo("BitPermissionJacksonModule");
     }
 
     @Test

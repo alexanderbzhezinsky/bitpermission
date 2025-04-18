@@ -95,3 +95,8 @@ final var outputPermissions = bitPermissionService.getPermissions(bitPermissions
 9. In the table set 'id' column as PRIMARY KEY.
 10. JPA not allows to save enums directly, so it's better to introduce an entity and map enum entries onto it.
 11. Synchronize enum permission class(es) with RDB table data.
+12. Consider having 'attributes' field in permission enum:
+```
+public final PermissionAttributes attributes;
+```
+It can store some additional attributes, and ease introducing or changing some new attribute for a permission enum. 

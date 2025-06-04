@@ -151,11 +151,11 @@ public class BitPermissionService {
                 .entrySet()
                 .stream()
                 .allMatch(classPermissionOrdinalEntry ->
-                        checkPermissionsArePresentInMap(classPermissionOrdinalEntry, domainBitPermissionMap));
+                        checkPermissionsArePresent(classPermissionOrdinalEntry, domainBitPermissionMap));
     }
 
-    protected boolean checkPermissionsArePresentInMap(Map.Entry<Class<?>, Set<Integer>> classPermissionOrdinalEntry,
-                                                      Map<String, BitPermission> domainBitPermissionMap) {
+    protected boolean checkPermissionsArePresent(Map.Entry<Class<?>, Set<Integer>> classPermissionOrdinalEntry,
+                                                 Map<String, BitPermission> domainBitPermissionMap) {
         final var permissionClass = classPermissionOrdinalEntry.getKey();
         final var permissionOrdinals = classPermissionOrdinalEntry.getValue();
         final var domain = permissionClass.getSimpleName();

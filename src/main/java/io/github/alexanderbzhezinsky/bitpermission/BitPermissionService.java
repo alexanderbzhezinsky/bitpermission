@@ -150,23 +150,27 @@ public class BitPermissionService {
         return getClassPermissionOrdinalMap(knownPermissions)
                 .entrySet()
                 .stream()
-                .allMatch(classPermissionOrdinalEntry -> {
+                .allMatch(classPermissionOrdinalEntry ->
+                        checkPermissionsArePresentInMap(classPermissionOrdinalEntry, domainBitPermissionMap));
+    }
 
-                    final var permissionClass = classPermissionOrdinalEntry.getKey();
-                    final var permissionOrdinals = classPermissionOrdinalEntry.getValue();
-                    final var domain = permissionClass.getSimpleName();
-                    final var permissionBitmask = permissionOrdinals
-                            .stream()
-                            .map(BASE_BIG_INT::pow)
-                            .reduce(ZERO_BIG_INT, BigInteger::add);
+    protected boolean checkPermissionsArePresentInMap(Map.Entry<Class<?>, Set<Integer>> classPermissionOrdinalEntry,
+                                                      Map<String, BitPermission> domainBitPermissionMap) {
+        final var permissionClass = classPermissionOrdinalEntry.getKey();
+        final var permissionOrdinals = classPermissionOrdinalEntry.getValue();
+        final var domain = permissionClass.getSimpleName();
+        final var permissionBitmask = permissionOrdinals
+                .stream()
+                .map(BASE_BIG_INT::pow)
+                .reduce(ZERO_BIG_INT, BigInteger::add);
 
-                    return Optional.ofNullable(domainBitPermissionMap.get(domain).bitmask())
-                            .map(bitmask -> {
-                                final var bitPermissionBitmask = new BigInteger(bitmask, BITMASK_RADIX);
-                                return bitPermissionBitmask.and(permissionBitmask).equals(permissionBitmask);
-                            })
-                            .orElse(false);
-                });
+        return Optional.ofNullable(domainBitPermissionMap.get(domain))
+                .map(BitPermission::bitmask)
+                .map(bitmask -> {
+                    final var bitPermissionBitmask = new BigInteger(bitmask, BITMASK_RADIX);
+                    return bitPermissionBitmask.and(permissionBitmask).equals(permissionBitmask);
+                })
+                .orElse(false);
     }
 
     public <T extends Enum<T>> boolean checkHasPermission(T permission, List<BitPermission> bitPermissions) {
